@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="travelontip-externalsystem-suite.xml" />
+	<munit:test name="travelontip-externalsystemFlow-test" doc:id="f55f1a5f-60c1-4684-8ccf-80c6d12a9be7" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Flow Reference For Get Routes on TravelOnTip" doc:id="15be3f09-f106-4edb-a512-c1a41b7c3fee" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="2e64087f-dc1f-4faf-a542-96aeff3df6a5" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json  --- readUrl('classpath://travelontipexternalsystemFlowtest\mock_payload3.dwl')]" mediaType="application/json " encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="554d1c89-e20f-4dd4-8350-169e4d755544" >
+				<munit:payload value="#[readUrl('classpath://travelontipexternalsystemFlowtest\set-event_payload3.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://travelontipexternalsystemFlowtest\set-event_attributes3.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to travelontip-externalsystemFlow" doc:id="44a195e5-dd36-4e85-8935-8f1995186c41" name="travelontip-externalsystemFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="aac4bc7a-3195-42e8-8daf-2fba902bfaed" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import travelontipexternalsystemFlowtest::assert_expression_payload3
+---
+assert_expression_payload3::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Logger" doc:id="63d551d9-a742-4af9-9c6b-0341f4957896" processor="logger" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="fad812fa-6cc4-426f-bc91-d88100e4cd78" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Logger" doc:id="5ea471b9-e521-4d7a-af2a-ec21ca8042a0" processor="logger" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="72fa98b7-ba05-438e-a923-eb49ad393e17" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Logger" doc:id="4867f4f4-7b91-4ad8-9af7-6ae0c6b35c69" processor="logger" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="dc93447e-6b7d-4041-95cb-841f225a7a54" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="85862295-a7a6-43da-85dc-503f192c3440" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="5da0a136-d1d2-4d50-bf30-4c79ceb74169" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="TravelOnTip-GetRoutes-ImplementationSub_Flow-test" doc:id="d7270888-4f23-459a-90de-d1f7435e95d1" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Select Routes for TravelOnTip System" doc:id="0a013260-616d-449c-ace3-25ba2f413e1c" processor="db:select">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="d92f5c45-a8d2-4c0f-81a7-9290d450d568" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/java  --- readUrl('classpath://TravelOnTipGetRoutesImplementationSubFlowtest\mock_payload1.dwl')]" mediaType="application/java " encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="25c37d2d-1694-431a-96f5-9b8c6beaf0b7" >
+				<munit:payload value="#[readUrl('classpath://TravelOnTipGetRoutesImplementationSubFlowtest\set-event_payload1.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://TravelOnTipGetRoutesImplementationSubFlowtest\set-event_attributes1.dwl')]" />
+				<munit:variables >
+					<munit:variable key="serviceType" value="#[output application/java --- readUrl('classpath://TravelOnTipGetRoutesImplementationSubFlowtest\set-event_variable_2.dwl')]" encoding="UTF-8" mediaType="application/java" />
+					<munit:variable key="transactionId" value="#[output application/java --- readUrl('classpath://TravelOnTipGetRoutesImplementationSubFlowtest\set-event_variable_3.dwl')]" encoding="UTF-8" mediaType="application/java" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to TravelOnTip-GetRoutes-ImplementationSub_Flow" doc:id="f3a23ea7-7f50-4d72-b31c-241a073318ca" name="TravelOnTip-GetRoutes-ImplementationSub_Flow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="7b4affca-f1d6-4484-82bf-eb64130bcf29" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import TravelOnTipGetRoutesImplementationSubFlowtest::assert_expression_payload1
+---
+assert_expression_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Transform Message Response from DB in JSON" doc:id="b97922d7-ddca-420f-be55-b5f1efd030ac" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="b3b2fca0-ac46-4008-851a-49882b332551" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="travelontip-externalsystemFlow-test1" doc:id="74887c30-bbab-406d-a232-4b8f3509704a" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Flow Reference For Get Schedules on TravelOnTip" doc:id="792e907c-d664-492f-bfba-bb4f72ec836e" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="6405e162-2aba-4db2-8d1c-068b43dae5cf" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json  --- readUrl('classpath://travelontipexternalsystemFlowtest1\mock_payload1.dwl')]" mediaType="application/json " encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="575cb62e-2062-49a9-9d9b-524f81b45457" >
+				<munit:payload value="#[readUrl('classpath://travelontipexternalsystemFlowtest1\set-event_payload2.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://travelontipexternalsystemFlowtest1\set-event_attributes2.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to travelontip-externalsystemFlow" doc:id="64843734-ff59-41d8-98b7-a762f738a8ce" name="travelontip-externalsystemFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="0cb2145e-37c7-4fa3-ba62-c648ccf96753" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import travelontipexternalsystemFlowtest1::assert_expression_payload2
+---
+assert_expression_payload2::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Logger" doc:id="3d3e54ad-1b72-44de-b93c-a4b778365be6" processor="logger" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="6acdd1dd-f89e-4c41-b046-9ac45a1de2a2" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Logger" doc:id="6274dbf9-af1c-4c2c-a3e0-91b53c8adf14" processor="logger" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="72fa98b7-ba05-438e-a923-eb49ad393e17" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Logger" doc:id="3453c169-36bb-4057-b1db-c6deac539768" processor="logger" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="dc93447e-6b7d-4041-95cb-841f225a7a54" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="95ffde0b-b712-4686-afa1-90c96d35ecca" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="5da0a136-d1d2-4d50-bf30-4c79ceb74169" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="TravelOnTip-GetSchedules-ImplementationSub_Flow-test" doc:id="6d877983-88d8-40f9-a849-a5d5f1cc2ffb" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Select Schedules for TravelOnTip System" doc:id="de728359-88da-4588-9239-8f9f8d038313" processor="db:select">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="352a6c0a-2d66-40d1-b133-ac6352c73654" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/java  --- readUrl('classpath://TravelOnTipGetSchedulesImplementationSubFlowtest\mock_payload2.dwl')]" mediaType="application/java " encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="12ba2822-856e-40ea-bc94-71e9304fb7b1" >
+				<munit:payload value="#[readUrl('classpath://TravelOnTipGetSchedulesImplementationSubFlowtest\set-event_payload2.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://TravelOnTipGetSchedulesImplementationSubFlowtest\set-event_attributes2.dwl')]" />
+				<munit:variables >
+					<munit:variable key="serviceType" value="#[output application/java --- readUrl('classpath://TravelOnTipGetSchedulesImplementationSubFlowtest\set-event_variable_4.dwl')]" encoding="UTF-8" mediaType="application/java" />
+					<munit:variable key="transactionId" value="#[output application/java --- readUrl('classpath://TravelOnTipGetSchedulesImplementationSubFlowtest\set-event_variable_5.dwl')]" encoding="UTF-8" mediaType="application/java" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to TravelOnTip-GetSchedules-ImplementationSub_Flow" doc:id="a94ee25c-1c16-45be-b6e7-ebc5e968060e" name="TravelOnTip-GetSchedules-ImplementationSub_Flow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="11df403b-1b3d-4607-bcb5-56d69cf6f419" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import TravelOnTipGetSchedulesImplementationSubFlowtest::assert_expression_payload2
+---
+assert_expression_payload2::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Transform Message Response from DB in JSON" doc:id="361de1ed-78c3-420c-b2cc-c056633cdd3c" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="eb4038a7-ed33-4a27-a858-4d478cc6c043" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
